@@ -63,6 +63,7 @@ function helga_breadcrumbs_form_alter(&$form, FormStateInterface $form_state, $f
     '#description' => t('Choose the menu link to be the default parent for a new link in the content authoring form.'),
     '#attributes' => ['class' => ['menu-title-select']],
   ];
+  assert($options_cacheability instanceof CacheableMetadata, 'The options cacheability should be an instance of CacheableMetadata.');
   $options_cacheability->applyTo($form['helga_breadcrumbs']['orphans_menu_item_id']);
 
   // Handle storing the orphans menu item ID as a third-party setting.
