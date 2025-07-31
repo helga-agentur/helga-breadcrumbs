@@ -22,12 +22,14 @@ final class HelgaBreadcrumbsServiceProvider implements ServiceProviderInterface 
     if (!$container->hasDefinition('menu_breadcrumb.breadcrumb.default')) {
       return;
     }
-    $priority = array_merge(...$container
-      ->getDefinition('menu_breadcrumb.breadcrumb.default')
-      ->getTag('breadcrumb_builder'))['priority'] ?? 0;
+    $tagProperties = $container->getDefinition('menu_breadcrumb.breadcrumb.default')->getTag('breadcrumb_builder');
+    // Flatten the tag properties to ensure we can access 'priority'.
+    $tagProperties = array_merge(...$tagProperties);
+    $priority = $tagProperties['priority'] ?? 0;
     if ($priority == 0) {
       return;
     }
+    assert(is_int($priority), 'The priority should be an integer.');
     $container
       ->register('helga_breadcrumbs.breadcrumb', HelgaBreadcrumbBuilder::class)
       ->addTag('breadcrumb_builder', ['priority' => $priority - 1])
