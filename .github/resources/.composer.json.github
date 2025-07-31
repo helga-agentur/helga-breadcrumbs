@@ -1,0 +1,31 @@
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],    
+    "require": {
+        "wikimedia/composer-merge-plugin": "dev-master",        
+        "drupal/drupal": "^11.2",
+        "drupal/core-dev": "^11.2"
+    },
+    "extra": {
+        "merge-plugin": {
+            "require": [
+                "helga-breadcrumbs/composer.json"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "drupal/core-vendor-hardening": true,
+            "drupal/core-recipe-unpack": true,
+            "drupal/core-project-message": true,
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "wikimedia/composer-merge-plugin": true
+        }
+    }
+}

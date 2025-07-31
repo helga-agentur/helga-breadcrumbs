@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Helga Breadcrumbs module.
+helga_breadcrumbs.settings:
+  type: config_object
+  label: 'Helga Breadcrumbs settings'
+  mapping:
+    breadcrumbs_orphans_menu:
+      type: string
+      label: "Breadcrumbs' menu for 'orphaned' entities"

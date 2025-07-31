@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Primary module hooks for Helga Breadcrumbs module.
+ */
+
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Config\Entity\ThirdPartySettingsInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+
+/**
+ * Implements hook_form_alter() for entity bundle forms.
+ *
+ * @param mixed[] $form
+ *   The form structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The ID of the form being altered.
+ */
+function helga_breadcrumbs_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+  try {
+    \Drupal::service('helga_breadcrumbs.breadcrumb');
+  }
+  catch (ServiceNotFoundException $e) {
+    return;
+  }
+
+  $formObject = $form_state->getFormObject();
+  if (!$formObject instanceof EntityFormInterface) {
+    return;
+  }
+  $entityBundle = $formObject->getEntity();
+  if (!$entityBundle instanceof ThirdPartySettingsInterface) {
+    return;
+  }
+  $form['helga_breadcrumbs'] = [
+    '#type' => 'details',
+    '#title' => t('Helga breadcrumbs'),
+    '#attached' => [
+      'library' => ['menu_ui/drupal.menu_ui.admin'],
+    ],
+    '#group' => 'additional_settings',
+  ];
+  $options_cacheability = new CacheableMetadata();
+  $helga_breadcrumbs_menu = \Drupal::configFactory()->get('helga_breadcrumbs.settings')->get('breadcrumbs_orphans_menu');
+  assert(is_string($helga_breadcrumbs_menu), 'The breadcrumbs orphans menu should be a string.');
+  $options = \Drupal::service('menu.parent_form_selector')->
+    getParentSelectOptions('', [
+        $helga_breadcrumbs_menu => t('Breadcrumbs menu'),
+      ],
+      $options_cacheability);
+  $form['helga_breadcrumbs']['orphans_menu_item_id'] = [
+    '#type' => 'select',
+    '#title' => t('Default parent link'),
+    '#default_value' => $entityBundle->getThirdPartySetting('helga_breadcrumbs', 'orphans_menu_item_id', $helga_breadcrumbs_menu . ':'),
+    '#options' => $options,
+    '#description' => t('Choose the menu link to be the default parent for a new link in the content authoring form.'),
+    '#attributes' => ['class' => ['menu-title-select']],
+  ];
+  $options_cacheability->applyTo($form['helga_breadcrumbs']['orphans_menu_item_id']);
+
+  // Handle storing the orphans menu item ID as a third-party setting.
+  $form['#entity_builders'][] = 'helga_breadcrumbs_entity_bundle_form_builder';  
+}
+
+/**
+ * Entity builder callback.
+ *
+ * This function is called to save the parent menu item ID for 'orphans' as a
+ * third-party setting for the given entity bundle.
+ *
+ * @param string $entity_type
+ *   The entity type ID.
+ * @param \Drupal\Core\Config\Entity\ThirdPartySettingsInterface $entity
+ *   The entity being built.
+ * @param mixed[] $form
+ *   The form structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function helga_breadcrumbs_entity_bundle_form_builder($entity_type, $entity, &$form, FormStateInterface $form_state): void {
+  if ($form_state->getValue('orphans_menu_item_id')) {
+    $orphansMenuItemId = $form_state->getValue('orphans_menu_item_id');
+    $entity->setThirdPartySetting('helga_breadcrumbs', 'orphans_menu_item_id', $orphansMenuItemId);
+    return;
+  }
+  $entity->unsetThirdPartySetting('helga_breadcrumbs', 'orphans_menu_item_id');
+}

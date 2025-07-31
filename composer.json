@@ -1,0 +1,14 @@
+{
+  "name": "drupal/helga_breadcrumbs",
+  "description": "Breadcrumbs for Helga",
+  "type": "drupal-module",
+  "keywords": [
+    "Drupal",
+    "Breadcrumbs"
+  ],
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/easy_breadcrumb": "^2.0",
+    "drupal/menu_breadcrumb": "^2.0"
+  }
+}

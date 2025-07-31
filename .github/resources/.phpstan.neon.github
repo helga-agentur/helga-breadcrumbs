@@ -1,0 +1,25 @@
+parameters:
+  level: max
+
+  bootstrapFiles:
+    # Load aliases.
+    - core/lib/Drupal/Core/Serialization/Yaml.php
+
+  paths:
+    - helga-breadcrumbs
+
+  fileExtensions:
+    - php
+    - module
+    - inc
+    - install
+    - theme
+    - profile
+
+  drupal:
+    bleedingEdge:
+      checkCoreDeprecatedHooksInApiFiles: true
+
+includes:
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+  - vendor/mglaman/phpstan-drupal/bleedingEdge.neon

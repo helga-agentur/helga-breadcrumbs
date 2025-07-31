@@ -1,0 +1,8 @@
+name: 'Helga Breadcrumbs'
+type: module
+description: 'Generic Breadcrumb Generation Strategy'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - easy_breadcrumb:easy_breadcrumb
+  - menu_breadcrumb:menu_breadcrumb
