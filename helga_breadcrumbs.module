@@ -67,6 +67,8 @@ function helga_breadcrumbs_form_alter(&$form, FormStateInterface $form_state, $f
   $options_cacheability->applyTo($form['helga_breadcrumbs']['orphans_menu_item_id']);
 
   // Handle storing the orphans menu item ID as a third-party setting.
+  $form['#entity_builders'] ??= [];
+  assert(is_array($form['#entity_builders']), 'The entity builders should be an array.');
   $form['#entity_builders'][] = 'helga_breadcrumbs_entity_bundle_form_builder';  
 }
 
