@@ -39,7 +39,7 @@ final class HelgaBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    * This is used to determine the breadcrumb trail for entities that do not
    * have a parent in the menu structure.
    *
-   * @var array<string>
+   * @var mixed[]
    */
   private array $orphansActiveTrail = [];
 
