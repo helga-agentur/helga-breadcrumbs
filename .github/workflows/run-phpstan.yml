@@ -17,8 +17,16 @@ jobs:
           cp helga-breadcrumbs/.github/resources/.composer.json.github composer.json
           cp helga-breadcrumbs/.github/resources/.phpstan.neon.github phpstan.neon
 
-      - name: Install Composer
-        uses: helga-agentur/composer-install@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          tools: composer:v2
+
+      - name: Run Composer Install
+        shell: bash
+        run: |
+          composer install --no-progress --prefer-dist --no-interaction
 
       - name: Run PHPStan
         shell: bash
