@@ -54,7 +54,7 @@ function helga_breadcrumbs_form_alter(&$form, FormStateInterface $form_state, $f
   if ($helga_breadcrumbs_menu === NULL) {
     $form['helga_breadcrumbs']['orphans_menu_item_missing'] = [
     '#type' => 'markup',
-    '#markup' => t('Missing helga_breadcrumbs.settings => breadcrumbs_orphans_menu identifier, follow the link below to set it up.<br/>'),
+    '#markup' => t('Missing orphans menu configuration. Please follow the link below to set it up.<br/>'),
     ];
     $form['helga_breadcrumbs']['helga_breadcrumbs_settings_form'] = [
       '#type' => 'link',
