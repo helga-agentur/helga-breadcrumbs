@@ -50,6 +50,7 @@ final class HelgaBreadcrumbSettingsForm extends ConfigFormBase {
       '#type' => 'select',
       '#title' => $this->t("Orphan's menu"),
       '#default_value' => $this->config('helga_breadcrumbs.settings')->get('breadcrumbs_orphans_menu'),
+      '#empty_value' => '',
       '#options' => $options,
       '#description' => $this->t('Select the menu to use for orphan breadcrumbs.'),
     ];
