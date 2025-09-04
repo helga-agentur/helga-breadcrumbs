@@ -144,6 +144,10 @@ final class HelgaBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       return NULL;
     }
     $menuItemId = str_replace($menuName . ':', '', $orphansMenuItemId);
+    // This is the case where the menu item is set to the menu itself.
+    if (empty($menuItemId)) {
+      return NULL;
+    }
     $menuLinkContent = $this->menuLinkManager->getInstance(['id' => $menuItemId]);
     assert($menuLinkContent instanceof MenuLinkContent, 'Menu link content plugin must be an instance of MenuLinkContent.');
     return $menuLinkContent;
