@@ -1,0 +1,7 @@
+helga_breadcrumbs.settings:
+  path: '/admin/config/system/helga-breadcrumb-settings'
+  defaults:
+    _title: 'Helga Breadcrumbs Settings'
+    _form: 'Drupal\helga_breadcrumbs\Form\HelgaBreadcrumbSettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,5 @@
+helga_breadcrumbs.settings:
+  title: Helga Breadcrumbs Settings
+  parent: system.admin_config_system
+  route_name: helga_breadcrumbs.settings
+  weight: 10
