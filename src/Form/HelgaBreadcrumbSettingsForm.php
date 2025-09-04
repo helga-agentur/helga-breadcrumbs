@@ -22,6 +22,9 @@ final class HelgaBreadcrumbSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return string[]
+   *  An array of configuration object names that will be editable by this form.
    */
   protected function getEditableConfigNames(): array {
     return ['helga_breadcrumbs.settings'];
@@ -29,6 +32,14 @@ final class HelgaBreadcrumbSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param mixed[] $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return mixed[]
+   *   An associative array containing the structure of the form.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $options = [];
@@ -47,6 +58,11 @@ final class HelgaBreadcrumbSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param mixed[] $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('helga_breadcrumbs.settings')
